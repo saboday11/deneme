@@ -1,0 +1,106 @@
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600&display=swap" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+<style>
+    .navbar-menu {
+        background-color: #323232;
+    }
+    .navbar-brand {
+        background-color: #323232;
+    }
+    .navbar-item {
+        background-color: #323232;
+        color: ghostwhite;
+        margin: 10px;
+        padding: 10px;
+    }
+    .navbar-end {
+        background-color: #323232;
+    }
+    body {
+        font-family: 'Nunito', sans-serif;
+    }
+    ::-webkit-scrollbar {
+        display: none;
+    }
+</style>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+            <img src="<%= cli.user.avatarURL() %>?size=2048" width="30" height="36" style="border-radius: 100%">
+        </a>
+        <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+
+    <div id="navbar" class="navbar-menu">
+        <div class="navbar-start">
+            <a class="navbar-item" href="/">Home</a>
+            <% if(auth) { %>
+                <a class="navbar-item" href="/dashboard">Dashboard</a>
+            <% } %>
+        </div>
+    </div>
+
+        <div class="navbar-end">
+            <% if(!auth) { %>
+            <div class="navbar-item">
+                <div class="buttons">
+                    <a class="button is-primary" href="/auth/login">
+                        <strong>Login with Discord</strong>
+                    </a>
+                </div>
+            </div>
+            <% } else if(auth) { %>
+                <div class="dropdown is-hoverable">
+                    <div class="dropdown-trigger">
+                        <a class="navbar-item">
+                            <img src="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>?size=2048" style="border-radius: 100%; margin-right: 10px;">
+                            <%= user.username %>#<%= user.discriminator %>
+                        </a>
+                        <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                            <% if(auth && cli.admins.has(user.id)) { %>
+                                <div class="dropdown-content">
+                                    <a class="dropdown-item" style="color: #fff;" href="/admin">Administration Page</a>
+                                </div>
+                            <% } %>
+                            <div class="dropdown-content">
+                                <a class="dropdown-item" id="logout-btn" style="color: #fff;">Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal is-active" style="display: none;" id="logout-modal">
+                    <div class="modal-background"></div>
+                    <div class="modal-card">
+                        <header class="modal-card-head">
+                            <p class="modal-card-title">Logging Out</p>
+                            <button class="delete" id="close-logout-modal" aria-label="close"></button>
+                        </header>
+                        <section class="modal-card-body">
+                            <p>You'll be logged out of your profile in 4 seconds, although you'll be able to log back in at anytime.</p>
+                            <br>
+                            <p>Have a good day/night!</p>
+                        </section>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+    <script>
+        $(document).ready(function() {
+            $("#logout-btn").click(function() {
+                $("#logout-modal").css("display", "");
+                setTimeout(() => {
+                    document.location = "/auth/logout";
+                }, 4000);
+            });
+            $("#close-logout-modal").click(function() {
+               $("#logout-modal").css("display", "none")
+            });
+        });
+    </script>
+</nav>
