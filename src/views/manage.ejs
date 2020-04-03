@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title><%= cli.user.username %> - Manage</title>
+        <link rel="stylesheet" type="text/css" href="/bulma/css/bulma.css">
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600&display=swap" rel="stylesheet">
+        <link rel="shortcut icon" href="<%= cli.user.avatarURL() %>" />
+        <%- include('partials/head') %>
+    </head>
+    <style>
+        html {
+            background-color: #1E1E1E !important;
+            font-family: 'Nunito', sans-serif;
+        }
+    </style>
+    <body>
+        <h1 class="subtitle" style="margin: 40px; color: white;">Manage <%= guild.name %>'s Server Settings</h1>
+        <br>
+
+    </body>
+    <footer><%- include('partials/footer') %></footer>
+</html>
