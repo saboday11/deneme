@@ -1,0 +1,23 @@
+{
+  "name": "web_dashboard",
+  "version": "1.0.0",
+  "description": "a web dashboard for a discord bot",
+  "main": "src/sass/styles.scss",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Ethan / realCartar",
+  "license": "ISC",
+  "dependencies": {
+    "bulma": "^0.8.1",
+    "discord.js": "^12.1.1",
+    "ejs": "^3.0.2",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "fs": "0.0.1-security",
+    "mongoose": "^5.9.7",
+    "passport": "^0.4.1",
+    "passport-discord": "^0.1.3"
+  }
+}
