@@ -92,6 +92,8 @@
                     redirect: "follow",
                     referrerPolicy: "no-referrer",
                     body: JSON.stringify(values)
+                }).then(() => {
+                   document.location = '/dashboard';
                 });
             });
         });
