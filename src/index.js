@@ -138,10 +138,12 @@ app.get("/dashboard", authOnly, (req, res) => {
     render(req, res, "dashboard", { guildInfo });
 });
 
-app.get("/manage/:id", authOnly, (req, res) => {
-    if(!client.guilds.cache.get(req.params.id)) return res.status(200).redirect(`https://discordapp.com/api/oauth2/authorize?client_id=${client.user.id}&permissions=8&scope=bot`);
+app.get("/manage/:id", authOnly, async (req, res) => {
+    if(!client.guilds.cache.get(req.params.id)) return res.status(200).redirect(`https://discordapp.com/api/oauth2/authorize?client_id=${client.user.id}&permissions=8&scope=bot&guild_id=${req.params.id}`);
     if(!client.guilds.cache.get(req.params.id).members.cache.get(req.user.id).permissions.has("ADMINISTRATOR")) return res.status(200).redirect('/');
-    render(req, res, "manage", { guild: client.guilds.cache.get(req.params.id) });
+    const guildSettings = await mongoose.models.Guild.findOne({id: req.params.id});
+    if(!guildSettings) client.setGuild(req.params.id);
+    render(req, res, "manage", { guild: client.guilds.cache.get(req.params.id), guildSettings });
 });
 
 app.listen(config.listening_port, function() {
