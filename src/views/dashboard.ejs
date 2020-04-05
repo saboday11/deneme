@@ -85,8 +85,9 @@
     </style>
     <body>
         <h1 class="title is-1" style="text-align: center; margin: 40px;">Manage Your Servers</h1>
-        <h2 class="subtitle" style="text-align: center; color: whitesmoke !important;">You need to have the Administrator permission.</h2>
+        <h2 class="subtitle" style="text-align: center; color: whitesmoke !important;">You need to have the Administrator permission for the server to show up.</h2>
         <% guildInfo.forEach((o, i) => { %>
+            <% if(!cli.guilds.cache.get(o.id) || !cli.guilds.cache.get(o.id).members.cache.get(user.id).permissions.has("ADMINISTRATOR")) return; %>
             <%
                 img = "https://cdn.discordapp.com/icons/" + o.id + "/" + o.icon + ""
                 if(!o.icon) img = "https://cdn.discordapp.com/embed/avatars/0.png";
