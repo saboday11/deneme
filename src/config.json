@@ -6,5 +6,8 @@
   "session_secret": "(MASH YOUR HEAD AGAINST THE KEYBOARD HERE)",
   "listening_port": 8080,
   "bot_authentication_token": "BOT TOKEN",
-  "support_server_id": "SUPPORT SERVER ID (optional)"
+  "support_server_id": "SUPPORT SERVER ID (optional)",
+   "database_ip": "MONGO DATABASE IP",
+  "database_name": "MONGO DATABASE NAME",
+  "database_port": 27017
 }
