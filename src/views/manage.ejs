@@ -12,11 +12,22 @@
             background-color: #1E1E1E !important;
             font-family: 'Nunito', sans-serif;
         }
+
+        input[type=text] {
+            width: 10%;
+            padding: 12px 20px;
+            margin: 40px;
+            box-sizing: border-box;
+            border: none;
+            border-radius: 10px;
+        }
+
     </style>
     <body>
         <h1 class="subtitle" style="margin: 40px; color: white;">Manage <%= guild.name %>'s Server Settings</h1>
-        <br>
-
+        <form>
+            <input name="prefix" type="text" id="prefix" placeholder="<%= guildSettings.configuration.prefix %> - Prefix">
+        </form>
     </body>
     <footer><%- include('partials/footer') %></footer>
 </html>
