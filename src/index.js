@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const fs = require("fs");
+const mongoose = require("mongoose");
 const express = require("express");
 const strategy = require("passport-discord").Strategy;
 const session = require("express-session");
@@ -11,14 +12,52 @@ const config = require("./config.json");
 const client = new Discord.Client();
 const app = express();
 
-client.admins = new Map([
-    ['322935449305874433', true]
-])
+mongoose.connect(`mongodb://${config.database_ip}:${config.database_port}/${config.database_name}`, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connection.on("error", console.error.bind(console, "[DATABASE] Connection Error:"));
+mongoose.connection.once("open", () => console.log("[DATABASE] Connected Successfully"));
 
-client.once('ready', () => {
-   client.user.setStatus('dnd');
-   client.user.setActivity('a dashboard', {type: "WATCHING"});
-   console.log('[BOT] Booted & ready.');
+require('./Schemas/Guild');
+
+client.admins = new Map([
+    ['YOUR', true],
+    ['USER', true],
+    ['ID', true]
+]);
+client.mongoose = mongoose;
+client.commands = new Discord.Collection();
+
+client.setGuild = function(guildid) {
+    if(!guildid) return "no guild id provided";
+    if(typeof guildid !== "string") return "provided guild id isnt a string";
+    const Guild = new mongoose.models.Guild({
+       id: guildid,
+       configuration: {
+           prefix: '!!',
+           verificationChannel: null,
+           verifiedRole: null
+       }
+    }).save();
+    return "saved guild to database";
+}
+
+fs.readdir("./events/", (err, events) => {
+    if(err) return console.log(new Error(err));
+    const jsfiles = events.filter(x => x.split(".").pop() === "js");
+    console.log(`[EVENTS] Loaded ${jsfiles.length} events.`);
+    jsfiles.forEach((f, i) => {
+        const event = require(`./events/${f}`);
+        client.on(`${f.replace(".js", "")}`, event.bind(null, client));
+    });
+});
+
+fs.readdir("./commands/", (err, commands) => {
+    if(err) return console.log(new Error(err));
+    const jsfiles = commands.filter(x => x.split(".").pop() === "js");
+    console.log(`[COMMANDS] Loaded ${jsfiles.length} commands.`);
+    jsfiles.forEach((f, i) => {
+        const command = require(`./commands/${f}`);
+        client.commands.set(f.replace(".js", ""), command);
+    });
 });
 
 passport.serializeUser(function(user, done) {
