@@ -3,6 +3,7 @@
     <head>
         <title><%= cli.user.username %> - Manage</title>
         <link rel="stylesheet" type="text/css" href="/bulma/css/bulma.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600&display=swap" rel="stylesheet">
         <link rel="shortcut icon" href="<%= cli.user.avatarURL() %>" />
         <%- include('partials/head') %>
@@ -22,12 +23,78 @@
             border-radius: 10px;
         }
 
+        label {
+            color: white;
+            margin: 40px;
+        }
+
+        select {
+            width: 20%;
+            padding: 12px 20px;
+            margin: 20px;
+            box-sizing: border-box;
+            border: none;
+            border-radius: 10px;
+        }
+
+        button[type="submit"] {
+            background-color: limegreen;
+            border-radius: 40px;
+            height: 50px;
+            width: 100px;
+            border: none;
+            margin: -20px -50px;
+            position:relative;
+            top:50%;
+            left:50%;
+        }
     </style>
     <body>
         <h1 class="subtitle" style="margin: 40px; color: white;">Manage <%= guild.name %>'s Server Settings</h1>
         <form>
+            <label for="prefix">Prefix</label>
             <input name="prefix" type="text" id="prefix" placeholder="<%= guildSettings.configuration.prefix %> - Prefix">
+            <label for="verificationChannel">Verification Channel</label>
+            <select id="verificationChannel" style="margin: 10px;">
+                <% guild.channels.cache.forEach(x => { %>
+                    <% if(x.type === 'category' || x.type === 'voice') return; %>
+                    <option value="<%= x.id %>">#<%= x.name %></option>
+                <% }); %>
+            </select>
+            <label for="verifiedRole">Verified Role</label>
+            <select id="verifiedRole">
+                <% guild.roles.cache.forEach(x => { %>
+                    <option value="<%= x.id %>"><%= x.name %></option>
+                <% }); %>
+            </select>
+            <br>
         </form>
+        <button id="submit" type="submit">Submit</button>
     </body>
+    <script>
+        $(document).ready(function() {
+            $("#submit").click(async function () {
+                const verificationChannel = document.getElementById('verificationChannel');
+                const verifiedRole = document.getElementById('verifiedRole');
+                const values = {
+                    prefix: document.getElementById('prefix').value ? document.getElementById('prefix').value : null,
+                    verificationChannel: verificationChannel.options[verificationChannel.selectedIndex].value ? verificationChannel.options[verificationChannel.selectedIndex].value : null,
+                    verifiedRole: verifiedRole.options[verifiedRole.selectedIndex].value ? verifiedRole.options[verifiedRole.selectedIndex].value : null
+                };
+                await fetch(`/manage/${window.location.pathname.split('/')[2]}`, {
+                   method: "POST",
+                   mode: "cors",
+                   cache: "no-cache",
+                   credentials: "same-origin",
+                   headers: {
+                       'Content-Type': 'application/json'
+                   },
+                    redirect: "follow",
+                    referrerPolicy: "no-referrer",
+                    body: JSON.stringify(values)
+                });
+            });
+        });
+    </script>
     <footer><%- include('partials/footer') %></footer>
 </html>
