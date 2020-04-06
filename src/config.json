@@ -1,7 +1,7 @@
 {
   "client_id": "CLIENT ID",
   "client_secret": "CLIENT SECRET",
-  "callback_url": "CALLBACK URL (default: http://hostname.here/auth/callback",
+  "callback_url": "CALLBACK URL (default: http://hostname.here/auth/callback)",
   "oauth_scopes": ["guilds.join", "identify", "guilds"],
   "session_secret": "(MASH YOUR HEAD AGAINST THE KEYBOARD HERE)",
   "listening_port": 8080,
