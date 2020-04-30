@@ -10,6 +10,7 @@ An easily configurable Discord Bot Dashboard (with an integrated Discord bot)
 # Credit
 
 [dicedtomato](https://github.com/dicedtomatoreal) - Render Function.
+[Bulma](https://bulma.io) - Amazing CSS Framework.
 
 # License 
 MIT License
