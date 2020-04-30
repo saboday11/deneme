@@ -7,6 +7,10 @@ An easily configurable Discord Bot Dashboard (with an integrated Discord bot)
  
  > Discord.js - This will be used as the API wrapper to connect to Discord easily (version used: v12)
 
+# Credit
+
+[dicedtomato](https://github.com/dicedtomatoreal) - Render Function.
+
 # License 
 MIT License
 
