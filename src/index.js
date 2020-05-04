@@ -76,7 +76,6 @@ passport.use(new strategy({
     return done(null, profile);
 }));
 
-app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.use(session({
     secret: config.session_secret,
