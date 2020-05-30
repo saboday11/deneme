@@ -3,15 +3,13 @@ An easily configurable Discord Bot Dashboard (with an integrated Discord bot)
 
 # Prerequisites
 
- > MongoDB - This'll be the sole database to store data from the Dashboard to the Discord bot.
- 
+ > MongoDB - This'll be the sole database to store data from the Dashboard to the Discord bot.\
  > Discord.js - This will be used as the API wrapper to connect to Discord easily (version used: v12)
 
 # Credit
 
 
-[dicedtomato](https://github.com/dicedtomatoreal) - Render Function.
-
+[dicedtomato](https://github.com/dicedtomatoreal) - Render Function.\
 [Bulma](https://bulma.io) - Amazing CSS Framework.
 
 # License 
