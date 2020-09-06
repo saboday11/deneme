@@ -1,11 +1,11 @@
-const Discord = require("discord.js");
-const fs = require("fs");
-const mongoose = require("mongoose");
-const express = require("express");
-const strategy = require("passport-discord").Strategy;
-const session = require("express-session");
-const passport = require("passport");
-const fetch = require('node-fetch');
+const Discord = require("discord.js"),
+      fs = require("fs"),
+      mongoose = require("mongoose"),
+      express = require("express"),
+      strategy = require("passport-discord").Strategy,
+      session = require("express-session"),
+      passport = require("passport"),
+      fetch = require("node-fetch");
 
 const config = require("./config.json");
 
