@@ -104,7 +104,7 @@ app.get("/auth/login", passport.authenticate("discord", { scope: config.oauth_sc
 app.get("/auth/callback", passport.authenticate("discord", { failureRedirect: "/"}), async function(req, res) {
     console.log(`[DASHBOARD] ${req.user.username} - Logging in..`);
     const data = { access_token: req.user.accessToken };
-    fetch(`https://discordapp.com/api/guilds/${config.support_server_id}/members/${req.user.id}`, {
+    fetch(`https://discord.com/api/guilds/${config.support_server_id}/members/${req.user.id}`, {
         method: 'PUT',
         headers: {
             'Authorization': `Bot ${config.bot_authentication_token}`,
