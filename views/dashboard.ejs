@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title><%= cli.user.username %> - Dashboard</title>
+        <link rel="stylesheet" type="text/css" href="/bulma/css/bulma.css">
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600&display=swap" rel="stylesheet">
+        <link rel="shortcut icon" href="<%= cli.user.avatarURL() %>" />
+        <%- include('partials/head') %>
+    </head>
+    <style>
+        html {
+            background-color: #1E1E1E !important;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        h1 {
+            color: white !important;
+        }
+
+        .card-holder {
+            margin: 50px 30px 50px 50px;
+            height: 150px;
+            width: 300px;
+            background-color: black;
+            display: inline-flex;
+            color: white;
+        }
+
+        .cards-list {
+            z-index: 0;
+            width: 20%;
+            display: inline-flex;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            margin: 30px 30px 30px 190px;
+            width: 300px;
+            height: 300px;
+            border-radius: 40px;
+            box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.22);
+            cursor: pointer;
+            transition: 0.1s;
+        }
+
+        .card .card_image {
+            width: inherit;
+            height: inherit;
+            border-radius: 30px;
+        }
+
+        .card .card_image img {
+            width: inherit;
+            height: inherit;
+            border-radius: 40px;
+            object-fit: cover;
+        }
+
+        .card .card_title {
+            text-align: center;
+            border-radius: 0 0 40px 40px;
+            font-family: sans-serif;
+            font-weight: bold;
+            font-size: 20px;
+            margin-top: -90px;
+            height: 40px;
+        }
+
+        .card:hover {
+            transform: scale(0.9, 0.9);
+            box-shadow: 5px 5px 30px 15px rgba(0,0,0,0.25),
+            -5px -5px 30px 15px rgba(0,0,0,0.22);
+        }
+
+        .title-white {
+            color: white;
+        }
+
+        @media all and (max-width: 500px) {
+            .card-list {
+                flex-direction: column;
+            }
+        }
+
+    </style>
+    <body>
+        <h1 class="title is-1" style="text-align: center; margin: 40px;">Manage Your Servers</h1>
+        <h2 class="subtitle" style="text-align: center; color: whitesmoke !important;">You need to have the Administrator permission for the server to show up.</h2>
+        <% guildInfo.forEach((o, i) => { %>
+            <% if(!cli.guilds.cache.get(o.id) || !cli.guilds.cache.get(o.id).members.cache.get(user.id).permissions.has("ADMINISTRATOR")) return; %>
+            <%
+                img = "https://cdn.discordapp.com/icons/" + o.id + "/" + o.icon + ""
+                if(!o.icon) img = "https://cdn.discordapp.com/embed/avatars/0.png";
+            %>
+
+            <div class="cards-list">
+                <div class="card">
+                    <div class="card_image">
+                        <img src="<%= img %>" onclick="document.location = '/manage/<%= o.id %>'" />
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <div class="card_title title-white">
+                        <p><%= o.name %></p>
+                    </div>
+                </div>
+            </div>
+        <% }); %>
+    </body>
+    <footer><%- include('partials/footer') %></footer>
+</html>
